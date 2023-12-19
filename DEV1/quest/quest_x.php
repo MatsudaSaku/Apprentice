@@ -2,14 +2,17 @@
 class VendingMachine
 {
     public $name;
-    public $coin;
+    public $coin = 0;
 
-    public function pressButton(){
-        if($this->coin == 100){
-        return 'cider';
+    public function pressButton($drink){
+        if($this->coin > Item::$cola && $drink == 'cola'){
+            return 'cola';
+        }
+        else if($this ->coin > Item::$cider && $drink == 'cider'){
+            return 'cider';
         }
         else{
-            return "[]";
+            return '[]';
         }
     }
 
@@ -24,7 +27,7 @@ class VendingMachine
     
     public function depositCoin($coin){
         if($coin == 100){
-            $this->coin = $coin;
+            $this->coin += $coin;
         }
         else{
             return false;
@@ -54,15 +57,17 @@ echo $vendingMachine->pressManufacturerName();
    echo 'Caught exception:';
 }
 */
+
 class Item
 {
-
+    static $cola = 100;
+    static $cider = 150;
 }
 
 $cola = new Item('cola');
 $vendingMachine = new VendingMachine('サントリー');
-$vendingMachine.depositCoin(100);
-echo $vendingMachine.pressButton(cola);
-$vendingMachine.depositCoin(100);
-echo $vendingMachine.pressButton(cola);
+$vendingMachine->depositCoin(100);
+echo $vendingMachine->pressButton("cola");
+$vendingMachine->depositCoin(100);
+echo $vendingMachine->pressButton("cola");
 ?>
